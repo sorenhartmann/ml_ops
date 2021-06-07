@@ -1,9 +1,7 @@
 from torch import nn
 
-
 def compute_conv_dim(dim_size, kernel_size, stride=1, padding=0):
     return int((dim_size - kernel_size + 2 * padding) / stride + 1)
-
 
 class MyAwesomeModel(nn.Module):
 
@@ -11,13 +9,13 @@ class MyAwesomeModel(nn.Module):
     input_size = (28, 28)
 
     # Convolutional model
-    kernel_sizes = [5, 5, 3]
-    out_channels = [10, 10, 5]
-    stride = [1, 1, 1]
-    padding = [2, 2, 1]
+    kernel_sizes = [5, 3]
+    out_channels = [5, 5]
+    stride = [1, 1]
+    padding = [2, 1]
 
     # FFNN
-    layer_sizes = [512, 256]
+    layer_sizes = [256, 128]
     output_size = 10
 
     dropout_perc = 0.5
@@ -80,5 +78,13 @@ class MyAwesomeModel(nn.Module):
         x = self.cnn(x)
         x = x.flatten(start_dim=1)
         x = self.ffnn(x)
+
+        return x
+
+    def latent_repr(self, x):
+
+        x = self.cnn(x)
+        x = x.flatten(start_dim=1)
+        x = self.ffnn[:-3](x)
 
         return x
