@@ -3,6 +3,7 @@ from pathlib import Path
 import click
 import torch
 from PIL import Image
+from torchvision.transforms import ToTensor
 from src.data.make_dataset import transform
 
 @click.command()
@@ -28,10 +29,12 @@ def main(model_file, image_path):
 
     for image_file in images:
         with Image.open(image_file) as f:
-            with torch.autograd.no_grad():
-                t = transform(f)
-                proba = model(t.unsqueeze(0)).softmax(-1)
-                print(f"File: {image_file.name} -> {proba.argmax(-1).item()} ({100*proba.max():02.2f}%)")
+            t = ToTensor()(f)
+        with torch.autograd.no_grad():
+            t = t.to(torch.float)
+            t = transform(t)
+            proba = model(t.unsqueeze(0)).softmax(-1)
+            print(f"File: {image_file.name} -> {proba.argmax(-1).item()} ({100*proba.max():02.2f}%)")
 
 
 

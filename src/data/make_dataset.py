@@ -3,13 +3,15 @@ import logging
 from pathlib import Path
 
 from dotenv import find_dotenv, load_dotenv
+import torch
 from torchvision import datasets, transforms
+
+from typing import Any, Tuple
 
 data_dir = Path(__file__).parents[2] / "data"
 
 # Define a transform to normalize the data
-transform = transforms.Compose([transforms.ToTensor(),
-                                    transforms.Normalize((0.5,), (0.5,))])
+transform = transforms.Compose([transforms.Normalize((0.5,), (0.5,))])
 
 class MNIST(datasets.MNIST):
     
@@ -20,6 +22,21 @@ class MNIST(datasets.MNIST):
     @property
     def processed_folder(self) -> str:
         return self.root / 'processed' / "MNIST"
+
+    def __getitem__(self, index: int) -> Tuple[Any, Any]:
+        """
+        Args:
+            index (int): Index
+
+        Returns:
+            tuple: (image, target) where target is index of the target class.
+        """
+        img, target = self.data[index], int(self.targets[index])
+        return img, target
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.data = self.transform(self.data.unsqueeze(1).to(torch.float) / 255)
 
 def mnist():
     
