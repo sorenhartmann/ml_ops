@@ -1,4 +1,3 @@
-from datetime import datetime
 from pathlib import Path
 
 import click
@@ -6,7 +5,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import torch
 import wandb
-from sklearn.decomposition import PCA
 from torch import nn, optim
 
 from src.data.make_dataset import mnist

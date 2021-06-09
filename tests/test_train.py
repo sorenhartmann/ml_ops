@@ -7,6 +7,7 @@ import torch
 from torch import nn, optim
 import pytest
 
+
 @pytest.fixture()
 def batch():
     train_set, _ = mnist()
@@ -15,6 +16,7 @@ def batch():
     images, targets = next(iter(train_loader))
 
     return images, targets
+
 
 @pytest.fixture()
 def data_loader():
@@ -34,10 +36,9 @@ def model():
 
 def test_train_step(batch, model):
 
-
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     criterion = nn.CrossEntropyLoss(reduction="sum")
-    
+
     optimizer.zero_grad = MagicMock(side_effect=optimizer.zero_grad)
     model.train = MagicMock(side_effect=model.train)
 
@@ -47,9 +48,10 @@ def test_train_step(batch, model):
     train_step(model, images, targets, criterion, optimizer)
 
     # All parameters should be different after step
-    assert all(~torch.equal(a, b) for a, b in zip(old_parameters, model.parameters()))
+    assert all(~torch.equal(a, b)
+               for a, b in zip(old_parameters, model.parameters()))
 
-    # Zero grad should be called 
+    # Zero grad should be called
     optimizer.zero_grad.assert_called()
 
 
@@ -63,10 +65,12 @@ def test_test_loop(data_loader, model):
     t_loop(model, data_loader, criterion)
 
     # All parameters should be the same after loop
-    assert all(torch.equal(a, b) for a, b in zip(old_parameters, model.parameters()))
+    assert all(torch.equal(a, b)
+               for a, b in zip(old_parameters, model.parameters()))
 
     # Evaluate mode should be called
     model.eval.assert_called()
+
 
 def test_train_loop(data_loader, model):
 
@@ -79,8 +83,8 @@ def test_train_loop(data_loader, model):
     train_loop(model, data_loader, criterion, optimizer)
 
     # All parameters should be different after step
-    assert all(~torch.equal(a, b) for a, b in zip(old_parameters, model.parameters()))
+    assert all(~torch.equal(a, b)
+               for a, b in zip(old_parameters, model.parameters()))
 
     # Evaluate mode should be called
     model.train.assert_called()
-

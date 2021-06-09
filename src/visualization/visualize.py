@@ -53,8 +53,6 @@ def main(model_file):
         sns.scatterplot(x=y[:, 0], y=y[:, 1], hue=classes)
         fig.savefig(figure_dir / "tsne_mnist.pdf")
 
-        pass
-
 
 if __name__ == "__main__":
 
