@@ -37,7 +37,8 @@ def main(model_file, image_path):
             t = transform(t)
             proba = model(t.unsqueeze(0)).softmax(-1)
             print(
-                f"File: {image_file.name} -> {proba.argmax(-1).item()} ({100*proba.max():02.2f}%)"
+                f"File: {image_file.name} ->"
+                f"{proba.argmax(-1).item()} ({100*proba.max():02.2f}%)"
             )
 
 

@@ -8,6 +8,8 @@ from torch.utils.data import DataLoader
 from src.data.make_dataset import mnist
 from src.models.train_model import figure_dir
 
+from sklearn.decomposition import PCA
+
 
 def pca_plot(model, dataloader):
 

@@ -132,14 +132,6 @@ def main(lr, epochs, validate, log):
 
         print(flush=True)
 
-    plt.plot(range(1, epochs + 1), train_losses, label="Train loss")
-    if validate:
-
-        plt.plot(range(1, epochs + 1), test_losses, label="Test loss")
-
-        fig = pca_plot(model, testloader)
-        wandb.log({"Latent PCA": wandb.Image(fig)})
-
     wandb.finish()
 
     plt.xlabel("Epochs")
