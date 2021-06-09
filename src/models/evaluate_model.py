@@ -2,8 +2,9 @@ import click
 import torch
 from torch import nn
 
-from src.models.train_model import model_dir, test_loop
 from src.data.make_dataset import mnist
+from src.models.train_model import model_dir, test_loop
+
 
 def main():
 

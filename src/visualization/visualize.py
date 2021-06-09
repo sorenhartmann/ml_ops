@@ -3,9 +3,30 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import torch
 from sklearn.manifold import TSNE
+from torch.utils.data import DataLoader
+
 from src.data.make_dataset import mnist
 from src.models.train_model import figure_dir
-from torch.utils.data import DataLoader
+
+def pca_plot(model, dataloader):
+
+    latent_samples = [] 
+    classes = []
+
+    model.eval()
+    with torch.autograd.no_grad():
+        for images, labels in dataloader:
+
+            x = model.latent_repr(images)
+            latent_samples.extend(x)
+            classes.extend(labels.tolist())
+
+        latent_samples = torch.stack(latent_samples)
+        y = PCA().fit_transform(latent_samples)
+
+        fig = plt.figure()
+        sns.scatterplot(x = y[:, 0], y=y[:, 1], hue=classes)
+        return fig
 
 @click.command()
 @click.argument("model_file", type=click.Path(exists=True))
