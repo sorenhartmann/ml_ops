@@ -14,8 +14,10 @@ def main():
 
     _, test_set = mnist()
 
-    testloader = torch.utils.data.DataLoader(test_set, batch_size=64, shuffle=True)
-    test_loss, accuracy = test_loop(model, testloader, criterion=nn.CrossEntropyLoss(reduction="sum"))
+    testloader = torch.utils.data.DataLoader(
+        test_set, batch_size=64, shuffle=True)
+    test_loss, accuracy = test_loop(
+        model, testloader, criterion=nn.CrossEntropyLoss(reduction="sum"))
 
     print(f"Test Loss: {test_loss:.3e}", end="\t")
     print(f"Accuracy: {accuracy:.3f}")

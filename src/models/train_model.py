@@ -28,6 +28,7 @@ def train_step(model, images, labels, criterion, optimizer):
 
     return loss.item()
 
+
 def train_loop(model, dataloader, criterion, optimizer):
 
     model.train()
@@ -63,7 +64,7 @@ def test_loop(model, dataloader, criterion):
     test_loss /= len(dataloader.dataset)
 
     return test_loss, accuracy
-        
+
 
 @click.command()
 @click.option("--lr", default=0.001, type=float)
@@ -77,9 +78,11 @@ def main(lr, epochs, validate, log):
     model = MyAwesomeModel()
     train_set, test_set = mnist()
 
-    trainloader = torch.utils.data.DataLoader(train_set, batch_size=64, shuffle=True)
+    trainloader = torch.utils.data.DataLoader(
+        train_set, batch_size=64, shuffle=True)
     if validate:
-        testloader = torch.utils.data.DataLoader(test_set, batch_size=64, shuffle=True)
+        testloader = torch.utils.data.DataLoader(
+            test_set, batch_size=64, shuffle=True)
 
     criterion = nn.CrossEntropyLoss(reduction="sum")
     optimizer = optim.Adam(model.parameters(), lr=lr)
@@ -138,7 +141,6 @@ def main(lr, epochs, validate, log):
 
         fig = pca_plot(model, testloader)
         wandb.log({"Latent PCA": wandb.Image(fig)})
-
 
     wandb.finish()
 

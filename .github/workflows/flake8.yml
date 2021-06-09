@@ -1,4 +1,4 @@
-name: "Sort imports"
+name: "Flake8"
 
 on:
   push:

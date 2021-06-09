@@ -4,6 +4,7 @@ from torch import nn
 def compute_conv_dim(dim_size, kernel_size, stride=1, padding=0):
     return int((dim_size - kernel_size + 2 * padding) / stride + 1)
 
+
 class MyAwesomeModel(nn.Module):
 
     input_channels = 1
