@@ -2,13 +2,12 @@ import click
 import matplotlib.pyplot as plt
 import seaborn as sns
 import torch
+from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from torch.utils.data import DataLoader
 
 from src.data.make_dataset import mnist
 from src.models.train_model import figure_dir
-
-from sklearn.decomposition import PCA
 
 
 def pca_plot(model, dataloader):
