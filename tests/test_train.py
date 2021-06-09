@@ -1,11 +1,13 @@
-from src.data.make_dataset import mnist
-from src.models.model import MyAwesomeModel
-from src.models.train_model import train_loop, train_step, test_loop as t_loop
 from unittest.mock import MagicMock
 
+import pytest
 import torch
 from torch import nn, optim
-import pytest
+
+from src.data.make_dataset import mnist
+from src.models.model import MyAwesomeModel
+from src.models.train_model import test_loop as t_loop
+from src.models.train_model import train_loop, train_step
 
 
 @pytest.fixture()
