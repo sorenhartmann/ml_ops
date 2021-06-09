@@ -20,5 +20,5 @@ jobs:
         python-version: 3.8
     - name: Sorting imports
       run: |
-        pip install isort
-        isort -c src tests
+        pip install flake8
+        flake8 src tests  
