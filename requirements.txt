@@ -14,6 +14,7 @@ pytest
 flake8
 snakeviz
 isort
+kaggle
 
 # local package
 -e .
